@@ -23,6 +23,7 @@ subdirs(arbre_binaire)
 subdirs(game)
 subdirs(screen)
 subdirs(dear_imgui)
+subdirs(wordleGame)
 #subdirs(snake)
 
 
