@@ -3,6 +3,7 @@
 #include <string.h>
 #include <time.h> //rand
 
+
 int loadFile(const char *filename, char ***wordsListInArray, int *sizeList)
 {
     FILE *file = fopen(filename, "r");
@@ -20,6 +21,8 @@ int loadFile(const char *filename, char ***wordsListInArray, int *sizeList)
     }
     printf("La taille de la liste est de %d mots\n", *sizeList);
     *wordsListInArray = (char **)malloc((*sizeList) * sizeof(char *));
+    memset(*wordsListInArray, 0, (*sizeList) * sizeof(char*));
+
     if (NULL == *wordsListInArray)
     {
         perror("Failure, memory not allocated");
@@ -30,6 +33,7 @@ int loadFile(const char *filename, char ***wordsListInArray, int *sizeList)
     for (int i = 0; i < *sizeList; ++i)
     {
         (*wordsListInArray)[i] = (char *)malloc(strlen(word) + 1);
+        memset(*wordsListInArray[i], 0, strlen(word) + 1);
 
         if ((*wordsListInArray)[i] == NULL)
         {
@@ -59,37 +63,45 @@ int compareWords(const char *wordToFind, const char *propositionWord)
 }
 
 int commonLetter = 0;
-void scoring(const char *wordToFind, const char *propositionWord, char ***bufferTab)
+void scoring(const char *wordToFind, const char *propositionWord, char **bufferTab, int *bufferTabSize)
 {
     int commonLetter = 0;
+    *bufferTabSize = 0;
 
     // Allocation mémoire pour bufferTab en fonction du nombre de lettres en commun
-    *bufferTab = (char **)malloc(5 * sizeof(char *));
-
+    *bufferTab = (char *)malloc(5 * sizeof(char ));
+    memset(*bufferTab, 0, 5 * sizeof(char)); // initialise le tableau
+    char wordToFindTemp[6] = { 0 };
+    strcpy(wordToFindTemp, wordToFind);
     for (int i = 0; i < 5; ++i)
     {
-        if (wordToFind[i] == propositionWord[i])
-        {
-            printf("lettre bien placée : \x1b[32m%c\x1b[0m\n", propositionWord[i]);
-        }
+      
         for (int j = 0; j < 5; ++j)
         {
-            if (i != j && wordToFind[i] == propositionWord[j])
+             if (wordToFindTemp[j] == propositionWord[i])
             {
-                commonLetter++;
-                printf("%d - Lettre en commun : \x1b[32m%c\x1b[0m\n", commonLetter, propositionWord[j]);
-
+                if (i != j)
+                {
+                    printf("%d - Lettre en commun : \x1b[32m%c\x1b[0m\n", commonLetter + 1, propositionWord[i]);
+                }
+                else
+                {
+                    printf("lettre bien placee\n");
+                }
+      
                 // Allocation mémoire pour chaque lettre en commun
-                (*bufferTab)[commonLetter - 1] = (char *)malloc(sizeof(char));
-                (*bufferTab)[commonLetter - 1][0] = propositionWord[j];
+                (*bufferTab)[commonLetter]= propositionWord[i];
+                commonLetter++;
+                wordToFindTemp[j] = '#';
+                break;
             }
         }
     }
-
+    bufferTabSize = commonLetter;
     // Affichage du contenu de bufferTab
     for (int i = 0; i < commonLetter; i++)
     {
-        printf("%c\n", (*bufferTab)[i][0]);
+        printf("%c\n", (*bufferTab)[i]);
     }
 }
 int decrease_test_try(int testTry, const char *wordToFind)
@@ -113,20 +125,27 @@ int decrease_test_try(int testTry, const char *wordToFind)
     return testTry;
 }
 
-int findBestWordInList(char **wordsListInArray, int sizeList, char **bufferTab, char ***secondArray)
+/*removeWordOfList(char** wordsListInArray, int* sizeList, const char* propositionWord);
+isPossible(char* wordToTest, char* bufferTab, int bufferTabSize);
+*/
+
+int findBestWordInList(char **wordsListInArray, int sizeList, char *bufferTab, int bufferTabSize, char ***secondArray)
 {
     int total = 0;
     for (int i = 0; i < sizeList; i++)
     {
+        int validLetter = 0;
         for (int j = 0; j < 5; j++)
         {
-            // printf("%c\n", (*bufferTab)[i]);
-            if (wordsListInArray[i][j] == (*bufferTab)[i])
+            for (int k = 0; k < bufferTabSize; k++)
             {
-                total++;
-                
+                if (wordsListInArray[i][j] == bufferTab[j])
+                {
+                    validLetter++;
+                }
             }
         }
+
     }
     printf("\n%d\n", total);
     return 0;
