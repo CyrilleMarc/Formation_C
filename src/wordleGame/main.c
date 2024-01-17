@@ -10,10 +10,11 @@
 int main()
 {
     char **wordsListInArray = NULL;
-    int sizeList = 0;
-    const char *filename = "C:/Users/cyrille.SGX0/Desktop/code/Formation_C/third_party/fichiers/liste.txt";
+    int sizeList = 0;    
+    const char *filename = "C:/Users/cyril/Desktop/archi_cmake/Formation_C/third_party/fichiers/liste.txt";
     char wordToFind[6] = {0};
-    char propositionWord[6] = {'*', '*', '*', '*', '*'};
+    char wordToTest[6] = { 0 };
+    char propositionWord[6] = {0};
     char word[6] = {0};
     int testTry = 5;
     char *bufferTab = NULL;
@@ -50,6 +51,8 @@ int main()
     {
         scoring(wordToFind, propositionWord, &bufferTab, &bufferTabSize);
     }
+    removeWordOfList(&wordsListInArray, &sizeList, propositionWord);
+    isPossible(&wordsListInArray, &sizeList, bufferTab, bufferTabSize);
 
     decrease_test_try(testTry, wordToFind);
     findBestWordInList(wordsListInArray, sizeList, bufferTab, bufferTabSize,  &secondArray);

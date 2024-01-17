@@ -33,7 +33,7 @@ int loadFile(const char *filename, char ***wordsListInArray, int *sizeList)
     for (int i = 0; i < *sizeList; ++i)
     {
         (*wordsListInArray)[i] = (char *)malloc(strlen(word) + 1);
-        memset(*wordsListInArray[i], 0, strlen(word) + 1);
+       // memset(*wordsListInArray[i], 0, (strlen(word) + 1));
 
         if ((*wordsListInArray)[i] == NULL)
         {
@@ -86,7 +86,7 @@ void scoring(const char *wordToFind, const char *propositionWord, char **bufferT
                 }
                 else
                 {
-                    printf("lettre bien placee\n");
+                    printf("lettre bien placee : \x1b[32m%c\x1b[0m\n", wordToFind[j]);
                 }
       
                 // Allocation mémoire pour chaque lettre en commun
@@ -125,9 +125,73 @@ int decrease_test_try(int testTry, const char *wordToFind)
     return testTry;
 }
 
-/*removeWordOfList(char** wordsListInArray, int* sizeList, const char* propositionWord);
-isPossible(char* wordToTest, char* bufferTab, int bufferTabSize);
-*/
+
+
+int removeWordOfList(char** wordsListInArray, int* sizeList, const char* propositionWord)
+{
+    int currentIndex = 0;
+    for (int i = 0; i < *sizeList; i++)
+    {
+        currentIndex = i;
+        if (strcmp(wordsListInArray[i], propositionWord) == 0)
+        {
+            free(wordsListInArray[i]);
+            break;
+        }
+    }
+        for (int j = currentIndex; j < *sizeList - 1; j++)
+    {
+        wordsListInArray[j] = wordsListInArray[j + 1];
+    }
+
+    (*sizeList)--;
+    wordsListInArray = realloc(wordsListInArray, (*sizeList) * sizeof(char*));
+    if (wordsListInArray == NULL)
+    {
+        perror("Failure, memory not reallocated");
+        return 1;
+    }
+    return 0;
+}
+
+int isPossible(char*** wordsListInArray, int* sizeList, char* bufferTab, int bufferTabSize)
+{
+    int i;
+    for (i = 0; i < *sizeList; i++)
+    {
+        int goodLetter = 0;
+        for (int j = 0; j < 5; j++)
+        {
+            if ((*wordsListInArray)[i][j] == bufferTab[j])
+            {
+                goodLetter++;
+            }
+        }
+        if (goodLetter != bufferTabSize)
+        {
+            break;
+        }
+    }
+
+    if (i < *sizeList)
+    {
+        free((*wordsListInArray)[i]);
+        for (int j = i; j < *sizeList - 1; j++)
+        {
+            (*wordsListInArray)[j] = (*wordsListInArray)[j + 1];
+        }
+
+        (*sizeList)--;
+        *wordsListInArray = realloc(*wordsListInArray, (*sizeList) * sizeof(char*));
+        if (*wordsListInArray == NULL)
+        {
+            perror("Failure, memory not reallocated");
+            return 1;
+        }
+    }
+    return 0;
+}
+
 
 int findBestWordInList(char **wordsListInArray, int sizeList, char *bufferTab, int bufferTabSize, char ***secondArray)
 {
