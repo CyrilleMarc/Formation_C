@@ -54,7 +54,7 @@ int main()
     //removeWordOfList(&wordsListInArray, &sizeList, propositionWord);
     isPossible(&wordsListInArray, &sizeList, bufferTab, bufferTabSize);
 
-    decrease_test_try(testTry, wordToFind);
+    //decrease_test_try(testTry, wordToFind);
     //findBestWordInList(wordsListInArray, sizeList, bufferTab, bufferTabSize,  &secondArray);
     //findRandomWordInList(secondArray, sizeList, propositionWord);
     //printf("La proposition de l'ordinateur est : %s\n", propositionWord);
