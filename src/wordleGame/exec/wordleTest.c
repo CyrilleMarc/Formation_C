@@ -156,7 +156,8 @@ int removeWordOfList(char** wordsListInArray, int* sizeList, const char* proposi
 
 int isPossible(char*** wordsListInArray, int* sizeList, char* bufferTab, int bufferTabSize)
 {
-    int i, j, k = 0;
+    int i, j, k, z = 0;
+    int newSizeList = (*sizeList);
     int wordsInNewList = 0;
     int deleteWords = 0;
 
@@ -185,30 +186,20 @@ int isPossible(char*** wordsListInArray, int* sizeList, char* bufferTab, int buf
         if (goodLetter < bufferTabSize)
         {
             free((*wordsListInArray)[i]);
-
-            for (j = i; j < *sizeList - 1; j++)
-            {
-                (*wordsListInArray)[j] = (*wordsListInArray)[j + 1];
-                (*sizeList)--;
-            }
-            *wordsListInArray = realloc(*wordsListInArray, (*sizeList) * sizeof(char*));
-            if (*wordsListInArray == NULL)
-            {
-                perror("Failure, memory not reallocated");
-                return 1;
-            }
+            newSizeList--;
         }
-        if (goodLetter >= bufferTabSize)
-        {
-            for (i = 0; i < (*sizeList); i++)
+}
+            for (z = 0; z < (*sizeList) - 1; z++)
             {
-                printf("%s\n", (*wordsListInArray)[i]);
+                if (NULL == wordsListInArray)
+                {
+                    (*wordsListInArray)[z] = (*wordsListInArray)[z + 1];
+                }
+                
             }
-
-        }
-    }
-   
-    printf("new sizeList : %d", (*sizeList));
+           
+            
+    printf("new sizeList : %d", (newSizeList));
     return 0;
 }
 
