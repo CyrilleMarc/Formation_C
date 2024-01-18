@@ -127,30 +127,44 @@ int decrease_test_try(int testTry, const char *wordToFind)
 
 
 
-int removeWordOfList(char** wordsListInArray, int* sizeList, const char* propositionWord)
+int removeWordOfList(char ***wordsListInArray, int *sizeList, const char *propositionWord)
 {
     int currentIndex = 0;
-    for (int i = 0; i < *sizeList; i++)
+    int i, j = 0;
+    for (i = 0; i < (*sizeList); i++)
     {
         currentIndex = i;
-        if (strcmp(wordsListInArray[i], propositionWord) == 0)
+        if (strcmp((*wordsListInArray)[i], propositionWord) == 0)
         {
-            free(wordsListInArray[i]);
+            free((*wordsListInArray)[i]);
+            (*wordsListInArray)[i] == NULL;
+            currentIndex = i;
             break;
+
+            for (j = 0; j < currentIndex; j++)
+            {
+                (*wordsListInArray)[j] = (*wordsListInArray)[j + 1];
+            }
         }
     }
+    for (i = 0; i < (*sizeList) - 1; i++)
+    {
+        (*wordsListInArray)[i] = (*wordsListInArray)[i + 1];
+        printf("%s\n", (*wordsListInArray)[i]);
+    }
+       /*
         for (int j = currentIndex; j < *sizeList - 1; j++)
     {
-        wordsListInArray[j] = wordsListInArray[j + 1];
+        (*wordsListInArray)[j] = (*wordsListInArray)[j + 1];
     }
 
     (*sizeList)--;
-    wordsListInArray = realloc(wordsListInArray, (*sizeList) * sizeof(char*));
+    *wordsListInArray = realloc(wordsListInArray, (*sizeList) * sizeof(char*));
     if (wordsListInArray == NULL)
     {
         perror("Failure, memory not reallocated");
         return 1;
-    }
+    }*/
     return 0;
 }
 
@@ -186,9 +200,10 @@ int isPossible(char*** wordsListInArray, int* sizeList, char* bufferTab, int buf
         if (goodLetter < bufferTabSize)
         {
             free((*wordsListInArray)[i]);
+            (*wordsListInArray)[i] == NULL;
             newSizeList--;
         }
-}
+    }
             for (z = 0; z < (*sizeList) - 1; z++)
             {
                 if (NULL == wordsListInArray)
