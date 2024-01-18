@@ -20,6 +20,8 @@ int main()
     char *bufferTab = NULL;
     char **secondArray = NULL;
     int bufferTabSize = 0;
+    int* newSizeList = NULL;
+    int* goodLetter = NULL;
 
     printf("Nombre d'essais : %d\n", testTry);
 
@@ -52,7 +54,7 @@ int main()
         scoring(wordToFind, propositionWord, &bufferTab, &bufferTabSize);
     }
     removeWordOfList(&wordsListInArray, &sizeList, propositionWord);
-   //isPossible(&wordsListInArray, &sizeList, bufferTab, bufferTabSize);
+    isPossible(&wordsListInArray, &sizeList, bufferTab, bufferTabSize, &newSizeList, &goodLetter);
 
     decrease_test_try(testTry, wordToFind);
     //findBestWordInList(wordsListInArray, sizeList, bufferTab, bufferTabSize,  &secondArray);
