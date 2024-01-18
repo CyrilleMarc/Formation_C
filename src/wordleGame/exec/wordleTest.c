@@ -156,9 +156,9 @@ int removeWordOfList(char** wordsListInArray, int* sizeList, const char* proposi
 
 int isPossible(char*** wordsListInArray, int* sizeList, char* bufferTab, int bufferTabSize)
 {
-    int i;
-    int goodLetter = 0;
+    int i, j, k = 0;
     int wordsInNewList = 0;
+
     for (i = 0; i < 5; i++)
     {
         if (bufferTab[i] != 0)
@@ -166,49 +166,28 @@ int isPossible(char*** wordsListInArray, int* sizeList, char* bufferTab, int buf
             bufferTabSize++;
         }
     }
-    for (i = 0; i < *sizeList; i++)
+
+    for (i = 0; i < (*sizeList); i++)
     {
-        for (int j = 0; j < 5; j++)
+        int goodLetter = 0;
+        for (j = 0; j < 5; j++)
         {
-            for (int k = 0; k < 5; k++)
+            for (k = 0; k < 5; k++)
             {
                 if ((*wordsListInArray)[i][j] == bufferTab[k])
                 {
                     (*wordsListInArray)[i][j] = '*';
-                    if ((*wordsListInArray)[i][j] == '*')
+                    goodLetter++;
+                    if (goodLetter >= bufferTabSize)
                     {
-                        goodLetter++;
-                        if (goodLetter < bufferTabSize)
-                        {
-                            free((*wordsListInArray)[i]);
-                        }
-                        if (i < *sizeList)
-                        {
-                            for (int j = i; j < *sizeList - 1; j++)
-                            {
-                                (*wordsListInArray)[j] = (*wordsListInArray)[j + 1];
-                            }
-
-                            (*sizeList)--;
-                            *wordsListInArray = realloc(*wordsListInArray, (*sizeList) * sizeof(char*));
-                            if (*wordsListInArray == NULL)
-                            {
-                                perror("Failure, memory not reallocated");
-                                return 1;
-                            }
-                        }
+                        printf("%s ->", (*wordsListInArray)[i]);
+                        printf("%d\n", goodLetter);
                     }
                 }
-            }
+                          }
         }
     }
-    for (int i = 0; i < (*sizeList); i++)
-    {
-        wordsInNewList++;
-        printf("%s\n", (*wordsListInArray)[i]);
-    }
-    printf("%d\n", bufferTabSize);
-    printf("%d", wordsInNewList);
+printf("%d", (*sizeList));
     return 0;
 }
 
