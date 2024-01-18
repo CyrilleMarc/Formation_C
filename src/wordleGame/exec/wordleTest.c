@@ -198,7 +198,11 @@ int isPossible(char*** wordsListInArray, int* sizeList, char* bufferTab, int buf
                 
             }
            
-            
+            for (i = 0; i < (*sizeList); i++)
+            {
+                printf("%s\n", (*wordsListInArray)[i]);
+            }
+
     printf("new sizeList : %d", (newSizeList));
     return 0;
 }
