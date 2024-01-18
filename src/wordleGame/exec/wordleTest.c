@@ -158,6 +158,13 @@ int isPossible(char*** wordsListInArray, int* sizeList, char* bufferTab, int buf
 {
     int i;
     int goodLetter = 0;
+    for (i = 0; i < 5; i++)
+    {
+        if (bufferTab[i] != 0)
+        {
+            bufferTabSize++;
+        }
+    }
     for (i = 0; i < *sizeList; i++)
     {
         for (int j = 0; j < 5; j++)
@@ -166,15 +173,23 @@ int isPossible(char*** wordsListInArray, int* sizeList, char* bufferTab, int buf
             {
                 if ((*wordsListInArray)[i][j] == bufferTab[k])
                 {
-                    //free((*wordsListInArray)[i]);
                     (*wordsListInArray)[i][j] = '*';
+                    if ((*wordsListInArray)[i][j] = '*')
+                    {
+                        goodLetter++;
+                    }
+                   
+                    if (goodLetter < bufferTabSize)
+                    {
+                        free((*wordsListInArray)[i]);
+                    }
                 }
             }
-            goodLetter++;
         }
     }
 
-    /*if (i < *sizeList)
+  /*
+    if (i < *sizeList)
     {
         for (int j = i; j < *sizeList - 1; j++)
         {
@@ -193,7 +208,7 @@ int isPossible(char*** wordsListInArray, int* sizeList, char* bufferTab, int buf
     {
         printf("%s\n", (*wordsListInArray)[i]);
     }
-    printf("%d\n", goodLetter);
+    printf("%d\n", bufferTabSize);
     return 0;
 }
 
