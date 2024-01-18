@@ -137,11 +137,9 @@ int removeWordOfList(char ***wordsListInArray, int *sizeList, const char *propos
         if (strcmp((*wordsListInArray)[i], propositionWord) == 0)
         {
             free((*wordsListInArray)[i]);
-            (*wordsListInArray)[i] == NULL;
             currentIndex = i;
-            break;
-
-            for (j = 0; j < currentIndex; j++)
+           
+            for (j = currentIndex; j < (*sizeList) - 1; j++)
             {
                 (*wordsListInArray)[j] = (*wordsListInArray)[j + 1];
             }
@@ -152,19 +150,14 @@ int removeWordOfList(char ***wordsListInArray, int *sizeList, const char *propos
         (*wordsListInArray)[i] = (*wordsListInArray)[i + 1];
         printf("%s\n", (*wordsListInArray)[i]);
     }
-       /*
-        for (int j = currentIndex; j < *sizeList - 1; j++)
-    {
-        (*wordsListInArray)[j] = (*wordsListInArray)[j + 1];
-    }
 
     (*sizeList)--;
-    *wordsListInArray = realloc(wordsListInArray, (*sizeList) * sizeof(char*));
+    *wordsListInArray = realloc(*wordsListInArray, (*sizeList) * sizeof(char*));
     if (wordsListInArray == NULL)
     {
         perror("Failure, memory not reallocated");
         return 1;
-    }*/
+    }
     return 0;
 }
 
