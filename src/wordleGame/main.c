@@ -51,13 +51,13 @@ int main()
     {
         scoring(wordToFind, propositionWord, &bufferTab, &bufferTabSize);
     }
-    removeWordOfList(&wordsListInArray, &sizeList, propositionWord);
+    //removeWordOfList(&wordsListInArray, &sizeList, propositionWord);
     isPossible(&wordsListInArray, &sizeList, bufferTab, bufferTabSize);
 
     decrease_test_try(testTry, wordToFind);
-    findBestWordInList(wordsListInArray, sizeList, bufferTab, bufferTabSize,  &secondArray);
-    findRandomWordInList(secondArray, sizeList, propositionWord);
-    printf("La proposition de l'ordinateur est : %s\n", propositionWord);
+    //findBestWordInList(wordsListInArray, sizeList, bufferTab, bufferTabSize,  &secondArray);
+    //findRandomWordInList(secondArray, sizeList, propositionWord);
+    //printf("La proposition de l'ordinateur est : %s\n", propositionWord);
 
     // scoring(wordToFind, propositionWord);
     // checkThePlaceToTheGoodLetter(wordToFind, propositionWord);
