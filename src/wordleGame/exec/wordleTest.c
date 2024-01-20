@@ -129,11 +129,9 @@ int decrease_test_try(int testTry, const char *wordToFind)
 
 int removeWordOfList(char ***wordsListInArray, int *sizeList, const char *propositionWord)
 {
-    int currentIndex = 0;
-    int i, j = 0;
+    int i, j, currentIndex = 0;
     for (i = 0; i < (*sizeList); i++)
     {
-        currentIndex = i;
         if (strcmp((*wordsListInArray)[i], propositionWord) == 0)
         {
             free((*wordsListInArray)[i]);
@@ -150,17 +148,20 @@ int removeWordOfList(char ***wordsListInArray, int *sizeList, const char *propos
         (*wordsListInArray)[i] = (*wordsListInArray)[i + 1];
     }
     (*sizeList)--;
+   /*
     *wordsListInArray = realloc(*wordsListInArray, (*sizeList) * sizeof(char*));
     if (wordsListInArray == NULL)
     {
         perror("Failure, memory not reallocated");
         return 1;
-    }
+    }*/
     printf("new size list :%d\n", (*sizeList));
     return 0;
 }
 
-int isPossible(char*** wordsListInArray, int* sizeList, char* bufferTab, int bufferTabSize, int *newSizeList, int *goodLetter)
+
+/*
+int isPossible(char*** wordsListInArray, int* sizeList, char* bufferTab, int *bufferTabSize, int *newSizeList, int *goodLetter)
 {
     int i, j, k, z = 0;
 
@@ -168,7 +169,7 @@ int isPossible(char*** wordsListInArray, int* sizeList, char* bufferTab, int buf
     {
         if (bufferTab[i] != 0)
         {
-            bufferTabSize++;
+            (*bufferTabSize)++;
         }
     }
 
@@ -186,41 +187,77 @@ int isPossible(char*** wordsListInArray, int* sizeList, char* bufferTab, int buf
                 }
             }
         }
-       
-        if (*goodLetter >= bufferTabSize)
+
+        if (*goodLetter == *bufferTabSize)
         {
-           printf(" wordsInList-> %s goodLetter->%d, bufferTabSize-> %d\n", (*wordsListInArray)[i], *goodLetter, bufferTabSize);
+           printf(" wordsInList-> %s goodLetter->%d, bufferTabSize-> %d\n", (*wordsListInArray)[i], *goodLetter, *bufferTabSize);
            (*newSizeList)++;
+
         }
         else
         {
+            j = i;
+            (*wordsListInArray)[i] = NULL;
             free((*wordsListInArray)[i]);
+            (*wordsListInArray)[j] = (*wordsListInArray)[j + 1];
             (*sizeList)--;
         }
     }
-        for (i = 0; i < (*sizeList) - 1; i++)
-            {
-                if (NULL == wordsListInArray)
-                {
-                    (*wordsListInArray)[i] = (*wordsListInArray)[i + 1];
-                }
-                *wordsListInArray = realloc(*wordsListInArray, (*sizeList) * sizeof(char*));
-                if (*wordsListInArray == NULL)
-                {
-                    perror("Failure, memory not reallocated");
-                    return 1;
-                }
-            }
-           
-            for (i = 0; i < (*sizeList); i++)
-            {
-                printf("%s\n", (*wordsListInArray)[i]);
-            }
+
     printf("New size list-> %d\n", *newSizeList);
-    printf("Old size list-> %d\n", *sizeList);
+    return 0;
+}*/
+   
+int isPossible(char*** wordsListInArray, int* sizeList, char* bufferTab, int* bufferTabSize, int* newSizeList, int* goodLetter, char ***matchArray)
+{
+    int i, j, k, z = 0;
+    *matchArray = (char **)malloc(*sizeList * sizeof(char*));
+
+    for (i = 0; i < 5; i++)
+    {
+        if (bufferTab[i] != 0)
+        {
+            (*bufferTabSize)++;
+        }
+    }
+
+    for (i = 0; i < *sizeList; i++)
+    {
+        *goodLetter = 0;
+        for (j = 0; j < 5; j++)
+        {
+            for (k = 0; k < 5; k++)
+            {
+                if ((*wordsListInArray)[i][j] == bufferTab[k] && j != k)
+                {
+                    (*wordsListInArray)[i][j] = '*';
+                    (*goodLetter)++;
+                }
+            }
+        }
+        if (*goodLetter == *bufferTabSize)
+        {
+            //printf(" wordsInList-> %s goodLetter->%d, bufferTabSize-> %d\n", (*wordsListInArray)[i], *goodLetter, *bufferTabSize);
+            (*matchArray)[*newSizeList] = malloc((strlen((*wordsListInArray)[i]) + 1) * sizeof(char));
+            strcpy((*matchArray)[*newSizeList], (*wordsListInArray)[i]);
+            printf("%s\n", (*matchArray)[(*newSizeList)]);
+            (*newSizeList)++;
+        }
+        
+        /*
+          else
+        {
+            j = i;
+            (*wordsListInArray)[i] = NULL;
+            free((*wordsListInArray)[i]);
+            (*wordsListInArray)[j] = (*wordsListInArray)[j + 1];
+            (*sizeList)--;
+        }*/
+    }
+
+    printf("New size list-> %d\n", *newSizeList);
     return 0;
 }
-
 
 int findBestWordInList(char **wordsListInArray, int sizeList, char *bufferTab, int bufferTabSize, char ***secondArray)
 {

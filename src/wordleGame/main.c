@@ -18,8 +18,8 @@ int main()
     char word[6] = {0};
     int testTry = 5;
     char *bufferTab = NULL;
-    char **secondArray = NULL;
-    int bufferTabSize = 0;
+    char ***matchArray = NULL;
+    int *bufferTabSize = NULL;
     int* newSizeList = NULL;
     int* goodLetter = NULL;
 
@@ -31,11 +31,11 @@ int main()
     {
         findRandomWordInList(wordsListInArray, sizeList, wordToFind);
         strcpy(wordToFind, "ADDAX");
-        printf("Le mot a trouver est : %s\n", wordToFind);
+        printf("The word to find : %s\n", wordToFind);
 
         findRandomWordInList(wordsListInArray, sizeList, propositionWord);
         strcpy(propositionWord, "AGADA");
-        printf("La proposition de l'ordinateur est : %s\n", propositionWord);
+        printf("Player proposition : %s\n", propositionWord);
     }
     else
     {
@@ -46,7 +46,7 @@ int main()
     int FirstResult = compareWords(wordToFind, propositionWord);
     if (FirstResult == 0)
     {
-        printf("\x1b[32mBravo vous avez trouvé le mot !!!\x1b[0m\n");
+        printf("\x1b[32mBravo, you found the good word !!!\x1b[0m\n");
         return 0;
     }
     else
@@ -54,18 +54,12 @@ int main()
         scoring(wordToFind, propositionWord, &bufferTab, &bufferTabSize);
     }
     removeWordOfList(&wordsListInArray, &sizeList, propositionWord);
-    isPossible(&wordsListInArray, &sizeList, bufferTab, bufferTabSize, &newSizeList, &goodLetter);
-
+    //isPossible(&wordsListInArray, &sizeList, bufferTab, bufferTabSize, &newSizeList, &goodLetter);
+    isPossible(&wordsListInArray, &sizeList, bufferTab, &bufferTabSize, &newSizeList, &goodLetter, &matchArray);
     decrease_test_try(testTry, wordToFind);
-    //findBestWordInList(wordsListInArray, sizeList, bufferTab, bufferTabSize,  &secondArray);
-    //findRandomWordInList(secondArray, sizeList, propositionWord);
-    //printf("La proposition de l'ordinateur est : %s\n", propositionWord);
-
-    // scoring(wordToFind, propositionWord);
-    // checkThePlaceToTheGoodLetter(wordToFind, propositionWord);
-    // compareWords(wordToFind, propositionWord);
-    // }
+    
     // free(wordsListInArray);
+    // free(matchArray)
     // free(bufferTab);
     return 0;
 }
