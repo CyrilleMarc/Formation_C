@@ -1,0 +1,147 @@
+Structure du cmake
+
+https://github.com/argtable/argtable3 pour le parsing des arguments des prog
+
+Projet
+  array
+    common
+      array_common.hxx
+      array_common.cxx
+    search
+      array_search.hxx
+      array_search.cxx
+    sort
+      array_insertion_sort.hxx
+      array_insertion_sort.cxx  
+      ...
+    test
+      array_insertion_sort_c.cxx
+      array_insertion_sort_std.cxx
+
+  list
+    ...
+  stack
+    ...
+  ...  
+  hash_table   
+    
+Tableau
+
+  Recherche naive
+  Recherche dicotomique
+
+  Analyse complexité (nombre d operation de comparaison)
+
+  Version en C et une version avec std::vector "iterator"
+
+  Tri
+
+  Fonction init random ou fichier
+  Fonction check result tableau trié
+
+  Binaires avec taille du tableau en entrée
+  Tri par insertion
+  Tri à bulles
+  Tri fusion
+  Tri rapide
+
+  Utilisé qsort de la lib C et qsort de la lib std
+
+  Version en C et une version avec std::vector "iterator"
+
+  Analyse complexité (nombre d operation de comparaison)
+
+Liste 
+
+  Liste chainéé
+
+  Insertion
+  Recherche
+  Suppression
+
+  Version en C et std::forward_list
+
+  Analyse complexité (nombre d operation de comparaison)
+
+  Liste double chainéé
+
+  Insertion
+  Recherche
+  Suppression
+
+  Version en C et std::list
+
+  Analyse complexité (nombre d operation de comparaison)
+
+FIFO 
+
+  empty
+  size
+  front
+  back
+  push_back
+  pop_front
+
+  Version en C et std::queue
+
+Arbre 
+
+  Arbre binaire
+  Arbre rouge-noir
+  Arbre B
+
+  Insertion
+  Recherche
+  Suppression
+  Parcours préfixe 
+  Parcours infixe 
+  Parcours postfixe
+  Parcours en profondeur
+  Parcours en largeur
+
+  Version en C
+  
+  Analyse complexité (nombre d operation de comparaison)
+
+Table de hachage
+
+  Sans collisions
+  Collisions par chainage
+  Collisions par adressage ouvert
+  Collisions par arbre rouge et noir
+
+  Fonction de hachage
+  Insertion
+  Recherche
+  Suppression
+
+  Version en C et std::map
+
+  Analyse complexité (nombre d operation de comparaison)
+  
+Graphe
+
+  Liste d'adjacence
+  Matrice d'adjacence
+  
+  Algorithme de parcours en largeur
+  Algorithme de parcours en profondeur
+  Algorithme de Dijkstra
+  Algorithme A*
+
+  Version en C
+  Analyse complexité
+  Visualisation avec graphviz 
+
+Design Pattern
+
+Abstract factory
+Builder
+Prototype
+Singleton
+Bridge
+Proxy
+Decorator
+Composite
+
+

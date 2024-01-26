@@ -14,7 +14,8 @@ int main()
 
     char **wordsListInArray = NULL;
     int sizeList = 0;    
-    const char *filename = "C:/Users/cyril/Desktop/archi_cmake/Formation_C/third_party/fichiers/liste.txt";
+    //const char *filename = "C:/Users/cyril/Desktop/archi_cmake/Formation_C/third_party/fichiers/liste.txt";
+    const char* filename = "C:/Users/cyrille.SGX0/Desktop/code/Formation_C/third_party/fichiers/liste.txt";
     char wordToFind[6] = {0};
     char wordToTest[6] = { 0 };
     char propositionWord[6] = {0};
