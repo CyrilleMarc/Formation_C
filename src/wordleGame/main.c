@@ -7,8 +7,11 @@
 #include "wordleGame/wordleTest.h"
 #include "wordleTest.h"
 
+
 int main()
 {
+
+
     char **wordsListInArray = NULL;
     int sizeList = 0;    
     const char *filename = "C:/Users/cyril/Desktop/archi_cmake/Formation_C/third_party/fichiers/liste.txt";
@@ -18,10 +21,11 @@ int main()
     char word[6] = {0};
     int testTry = 5;
     char *bufferTab = NULL;
-    char ***matchArray = NULL;
+    char **matchArray = NULL;
     int *bufferTabSize = NULL;
     int* newSizeList = NULL;
     int* goodLetter = NULL;
+    char* newWord = NULL;
 
     printf("Nombre d'essais : %d\n", testTry);
 
@@ -54,12 +58,13 @@ int main()
         scoring(wordToFind, propositionWord, &bufferTab, &bufferTabSize);
     }
     removeWordOfList(&wordsListInArray, &sizeList, propositionWord);
-    //isPossible(&wordsListInArray, &sizeList, bufferTab, bufferTabSize, &newSizeList, &goodLetter);
     isPossible(&wordsListInArray, &sizeList, bufferTab, &bufferTabSize, &newSizeList, &goodLetter, &matchArray);
+    findNewWordInList(matchArray, &newSizeList, &newWord);
     decrease_test_try(testTry, wordToFind);
     
-    // free(wordsListInArray);
-    // free(matchArray)
-    // free(bufferTab);
+    
+    free(wordsListInArray);
+    free(matchArray);
+    free(bufferTab);
     return 0;
 }
