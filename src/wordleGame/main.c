@@ -15,7 +15,7 @@ int main()
     char **wordsListInArray = NULL;
     int sizeList = 0;    
     //const char *filename = "C:/Users/cyril/Desktop/archi_cmake/Formation_C/third_party/fichiers/liste.txt";
-    const char* filename = "C:/Users/cyrille.SGX0/Desktop/code/Formation_C/third_party/fichiers/liste.txt";
+    const char* filename = "C:/Users/cyril/Desktop/archi_cmake/Formation_C/third_party/fichiers/liste.txt";
     char wordToFind[6] = {0};
     char wordToTest[6] = { 0 };
     char propositionWord[6] = {0};
@@ -27,20 +27,19 @@ int main()
     int* newSizeList = NULL;
     int* goodLetter = NULL;
     char* newWord = NULL;
+    int* firstResult = NULL;
 
-    printf("Nombre d'essais : %d\n", testTry);
+    printf("Tries : %d\n\n", testTry);
 
-    //srand(time(NULL));
+    srand(time(NULL));
 
     if (loadFile(filename, &wordsListInArray, &sizeList) == 0)
     {
         findRandomWordInList(wordsListInArray, sizeList, wordToFind);
-        strcpy(wordToFind, "ADDAX");
-        printf("The word to find : %s\n", wordToFind);
+        printf("The word to find : %s\n\n", wordToFind);
 
         findRandomWordInList(wordsListInArray, sizeList, propositionWord);
-        strcpy(propositionWord, "AGADA");
-        printf("Player proposition : %s\n", propositionWord);
+        printf("Player proposition : %s\n\n", propositionWord);
     }
     else
     {
@@ -48,8 +47,8 @@ int main()
         return 1;
     }
 
-    int FirstResult = compareWords(wordToFind, propositionWord);
-    if (FirstResult == 0)
+    firstResult = compareWords(wordToFind, propositionWord);
+    if ((&firstResult) == 0)
     {
         printf("\x1b[32mBravo, you found the good word !!!\x1b[0m\n");
         return 0;
@@ -60,9 +59,37 @@ int main()
     }
     removeWordOfList(&wordsListInArray, &sizeList, propositionWord);
     isPossible(&wordsListInArray, &sizeList, bufferTab, &bufferTabSize, &newSizeList, &goodLetter, &matchArray);
-    findNewWordInList(matchArray, &newSizeList, &newWord);
     decrease_test_try(testTry, wordToFind);
+    printf("\n");
+   while (&firstResult != 0)
+    {
+        findNewWordInList(matchArray, &newSizeList, &newWord);
+        printf("New word is %s\n", newWord);
+
+        if (&firstResult == 0)
+        {
+            printf("you found the good word\n");
+            break;
+        }
+        else
+        {
+            printf("you haven't found the right word\n");
+            scoring(wordToFind, newWord, &bufferTab, &bufferTabSize);
+            testTry--;
+        }
+        decrease_test_try(testTry, wordToFind);
+        printf("\n");
+        if (testTry == 0)
+        {
+            printf("You haven't found the right word. It was %s", wordToFind);
+            break;
+        }
+    }
     
+    
+    //removeWordOfList(&matchArray, &sizeList, &newWord);
+    //isPossible(&matchArray, &sizeList, bufferTab, &bufferTabSize, &newSizeList, &goodLetter, &matchArray);
+    //decrease_test_try(testTry, wordToFind);
     
     free(wordsListInArray);
     free(matchArray);

@@ -19,7 +19,7 @@ int loadFile(const char *filename, char ***wordsListInArray, int *sizeList)
     {
         (*sizeList)++;
     }
-    printf("La taille de la liste est de %d mots\n", *sizeList);
+    printf("Size list %d words\n", *sizeList);
     *wordsListInArray = (char **)malloc((*sizeList) * sizeof(char *));
     memset(*wordsListInArray, 0, (*sizeList) * sizeof(char*));
 
@@ -58,7 +58,6 @@ findNewWordInList(char** matchArray, int* newSizeList, char** newWord)
     int randomNumber = rand() % (*newSizeList);
     *newWord = malloc(6 * sizeof(char));
     strcpy(*newWord,matchArray[randomNumber]);
-    printf("%s\n", *newWord);
     return 0;
 }
 
@@ -91,11 +90,11 @@ void scoring(const char *wordToFind, const char *propositionWord, char **bufferT
             {
                 if (i != j)
                 {
-                    printf("%d - Lettre en commun : \x1b[32m%c\x1b[0m\n", commonLetter + 1, propositionWord[i]);
+                    printf("%d - Common letter : \x1b[32m%c\x1b[0m\n", commonLetter + 1, propositionWord[i]);
                 }
                 else
                 {
-                    printf("lettre bien placee : \x1b[32m%c\x1b[0m\n", wordToFind[j]);
+                    printf("Good place letter : \x1b[32m%c\x1b[0m\n", wordToFind[j]);
                 }
       
                 // Allocation mémoire pour chaque lettre en commun
@@ -113,25 +112,25 @@ void scoring(const char *wordToFind, const char *propositionWord, char **bufferT
         printf("%c\n", (*bufferTab)[i]);
     }
 }
+
 int decrease_test_try(int testTry, const char *wordToFind)
 {
     testTry--;
     switch (testTry)
     {
     case 1:
-        printf("essai restant : %d\n", testTry);
-        break;
+        printf("Try remaining : %d\n", testTry);
+        return testTry;
     case 0:
-        printf("Vous n'avez plus d'essai, désolé mais vous pouvez rejouer.\nLe mot à trouver était %s\n ", wordToFind);
-        break;
+        printf("Sorry, you haven't found the word. Right word was %s\n ", wordToFind);
+       return testTry;
     default:
         if (testTry > 1)
         {
-            printf("essais restants : %d\n", testTry);
-            break;
+            printf("tries remaining : %d\n", testTry);
+            return testTry;
         }
     }
-    return testTry;
 }
 
 
