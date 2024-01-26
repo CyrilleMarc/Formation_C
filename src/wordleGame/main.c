@@ -73,15 +73,14 @@ int main()
         }
         else
         {
-            printf("you haven't found the right word\n");
             scoring(wordToFind, newWord, &bufferTab, &bufferTabSize);
             testTry--;
         }
         decrease_test_try(testTry, wordToFind);
         printf("\n");
-        if (testTry == 0)
+        if (testTry == 1)
         {
-            printf("You haven't found the right word. It was %s", wordToFind);
+            printf("You haven't found the right word. right word was %s\n\n", wordToFind);
             break;
         }
     }

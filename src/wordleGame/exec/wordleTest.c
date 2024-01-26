@@ -19,7 +19,7 @@ int loadFile(const char *filename, char ***wordsListInArray, int *sizeList)
     {
         (*sizeList)++;
     }
-    printf("Size list %d words\n", *sizeList);
+    printf("Size list %d words\n\n", *sizeList);
     *wordsListInArray = (char **)malloc((*sizeList) * sizeof(char *));
     memset(*wordsListInArray, 0, (*sizeList) * sizeof(char*));
 
@@ -106,11 +106,6 @@ void scoring(const char *wordToFind, const char *propositionWord, char **bufferT
         }
     }
     bufferTabSize = commonLetter;
-    // Affichage du contenu de bufferTab
-    for (int i = 0; i < commonLetter; i++)
-    {
-        printf("%c\n", (*bufferTab)[i]);
-    }
 }
 
 int decrease_test_try(int testTry, const char *wordToFind)
@@ -121,9 +116,6 @@ int decrease_test_try(int testTry, const char *wordToFind)
     case 1:
         printf("Try remaining : %d\n", testTry);
         return testTry;
-    case 0:
-        printf("Sorry, you haven't found the word. Right word was %s\n ", wordToFind);
-       return testTry;
     default:
         if (testTry > 1)
         {
