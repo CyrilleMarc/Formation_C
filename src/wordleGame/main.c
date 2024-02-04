@@ -7,39 +7,28 @@
 #include "wordleGame/wordleTest.h"
 #include "wordleTest.h"
 
-
 int main()
 {
-
-
-    char **wordsListInArray = NULL;
-    int sizeList = 0;    
-    //const char *filename = "C:/Users/cyril/Desktop/archi_cmake/Formation_C/third_party/fichiers/liste.txt";
     const char* filename = "C:/Users/cyril/Desktop/archi_cmake/Formation_C/third_party/fichiers/liste.txt";
-    char wordToFind[6] = {0};
-    char wordToTest[6] = { 0 };
-    char propositionWord[6] = {0};
-    char word[6] = {0};
-    int testTry = 5;
-    char *bufferTab = NULL;
-    char **matchArray = NULL;
-    int *bufferTabSize = NULL;
-    int* newSizeList = NULL;
-    int* goodLetter = NULL;
-    char* newWord = NULL;
-    int* firstResult = NULL;
+    // const char* filename = "C:/Users/cyrille.SGX0/Desktop/code/Formation_C/third_party/fichiers/liste.txt";
+    char** wordsListInArray = NULL;
+    int sizeList = 0;
+    char word[6] = { 0 };
+    char wordToFind[6] = { 0 };
+    char propositionWord[6] = { 0 };
+    int testTry = 15;
+    int comparisonResult = 1;
+    int bufferTabSize = 0;
+    char bufTemp[6] = { 0 };
 
-    printf("Tries : %d\n\n", testTry);
+
+    printf("Nombre d'essais : %d\n", testTry);
 
     srand(time(NULL));
 
     if (loadFile(filename, &wordsListInArray, &sizeList) == 0)
     {
-        findRandomWordInList(wordsListInArray, sizeList, wordToFind);
-        printf("The word to find : %s\n\n", wordToFind);
-
-        findRandomWordInList(wordsListInArray, sizeList, propositionWord);
-        printf("Player proposition : %s\n\n", propositionWord);
+        printf("file \"%s\" found\n", filename);
     }
     else
     {
@@ -47,51 +36,39 @@ int main()
         return 1;
     }
 
-    firstResult = compareWords(wordToFind, propositionWord);
-    if ((&firstResult) == 0)
-    {
-        printf("\x1b[32mBravo, you found the good word !!!\x1b[0m\n");
-        return 0;
-    }
-    else
-    {
-        scoring(wordToFind, propositionWord, &bufferTab, &bufferTabSize);
-    }
-    removeWordOfList(&wordsListInArray, &sizeList, propositionWord);
-    isPossible(&wordsListInArray, &sizeList, bufferTab, &bufferTabSize, &newSizeList, &goodLetter, &matchArray);
-    decrease_test_try(testTry, wordToFind);
-    printf("\n");
-   while (&firstResult != 0)
-    {
-        findNewWordInList(matchArray, &newSizeList, &newWord);
-        printf("New word is %s\n", newWord);
+    findRandomWordInList(wordsListInArray, sizeList, wordToFind);
+    printf("Word to find => %s\n", wordToFind);
 
-        if (&firstResult == 0)
+    
+    
+    while (comparisonResult != 0)
+    {
+        if (sizeList != 0)
         {
-            printf("you found the good word\n");
-            break;
-        }
-        else
-        {
-            scoring(wordToFind, newWord, &bufferTab, &bufferTabSize);
-            testTry--;
-        }
-        decrease_test_try(testTry, wordToFind);
-        printf("\n");
-        if (testTry == 1)
-        {
-            printf("You haven't found the right word. right word was %s\n\n", wordToFind);
-            break;
+            findRandomWordInList(wordsListInArray, sizeList, propositionWord);
+            printf("Proposition word => %s\n", propositionWord);
+
+            comparisonResult = compareWords(wordToFind, propositionWord);
+            if (comparisonResult == 0)
+            {
+                printf("Bravo , you have found the right word : %s\n", wordToFind);
+            }
+            else
+            {
+                scoring(&wordsListInArray, &sizeList, bufferTabSize, wordToFind, propositionWord);
+                findRandomWordInList(wordsListInArray, sizeList, propositionWord);
+                compareWords(wordToFind, propositionWord);
+
+                testTry--;
+                printf("Tries remaining %d\n", testTry);
+
+               
+                if (testTry == 0)
+                {
+                    break;
+                }
+            }
         }
     }
-    
-    
-    //removeWordOfList(&matchArray, &sizeList, &newWord);
-    //isPossible(&matchArray, &sizeList, bufferTab, &bufferTabSize, &newSizeList, &goodLetter, &matchArray);
-    //decrease_test_try(testTry, wordToFind);
-    
     free(wordsListInArray);
-    free(matchArray);
-    free(bufferTab);
-    return 0;
 }
