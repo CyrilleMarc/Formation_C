@@ -48,9 +48,16 @@ int loadFile(const char* filename, char*** wordsListInArray, int* sizeList)
 
 int findRandomWordInList(char** wordsListInArray, int sizeList, char* wordToFind)
 {
-    int randomNumber = rand() % sizeList;
-    strcpy(wordToFind, wordsListInArray[randomNumber]);
-    return 0;
+    if (sizeList > 0)
+    {
+        int randomNumber = rand() % sizeList;
+        strcpy(wordToFind, wordsListInArray[randomNumber]);
+        return 0;
+    }
+    else
+    {
+        printf("SizeList is 0\n");
+    }
 }
 
 int compareWords(const char* wordToFind, const char* propositionWord)
@@ -62,7 +69,7 @@ int compareWords(const char* wordToFind, const char* propositionWord)
     return 1;
 }
 
-int scoring(char*** wordsListInArray, int* sizeList, int bufferTabSize, const char* wordToFind, char* propositionWord)
+int scoring(char*** wordsListInArray, int* sizeList, int bufferTabSize, const char* wordToFind, char* propositionWord, char **bufferTab)
 {
     int i, j, k = 0;
     int totalScoreInArray = 0;
@@ -74,6 +81,9 @@ int scoring(char*** wordsListInArray, int* sizeList, int bufferTabSize, const ch
 
     strcpy(bufferWord, propositionWord);
 
+    *bufferTab = malloc(5 * sizeof(char));
+    memset(*bufferTab, 0, 6);
+    bufferTabSize = 0;
     for (i = 0; i < 5; i++)
     {
         for (j = 0; j < 5; j++)
@@ -83,6 +93,7 @@ int scoring(char*** wordsListInArray, int* sizeList, int bufferTabSize, const ch
                 if (i == j)
                 {
                     rightLetter += 2;
+                    (*bufferTab)[bufferTabSize] = bufferWord[j];
                     bufferWord[j] = '#';
                     bufferTabSize++;
                     break;
@@ -90,6 +101,7 @@ int scoring(char*** wordsListInArray, int* sizeList, int bufferTabSize, const ch
                 if (i != j)
                 {
                     commonLetter++;
+                    (*bufferTab)[bufferTabSize] = bufferWord[j];
                     bufferWord[j] = '#';
                     bufferTabSize++;
                     break;
@@ -97,20 +109,23 @@ int scoring(char*** wordsListInArray, int* sizeList, int bufferTabSize, const ch
             }
         }
     }
-    total = commonLetter + rightLetter + bufferTabSize;
+    total = commonLetter + rightLetter;
     printf("total -> %d\n", total);
+    printf("bufferTabSize->%d\n", bufferTabSize);
 
     for (i = 0; i < *sizeList; i++)
     {
         totalScoreInArray = 0;
         commonLetter = 0;
         rightLetter = 0;
-        bufferTabSize = 0;
+        bufferTabSize++;
         for (j = 0; j < 5; j++)
         {
+            bufferTabSize = 0;
             for (k = 0; k < 5; k++)
             {
-                if ((*wordsListInArray)[i][j] == propositionWord[k])
+                strcpy(bufferWord2, (*wordsListInArray)[i]);
+                if (bufferWord2[j] == propositionWord[k])
                 {
                     if (k == j)
                     {
@@ -129,8 +144,8 @@ int scoring(char*** wordsListInArray, int* sizeList, int bufferTabSize, const ch
                 }
             }
         }
-        totalScoreInArray = commonLetter + rightLetter + bufferTabSize;
-        if (totalScoreInArray != total)
+        totalScoreInArray = commonLetter + rightLetter;
+        if ((totalScoreInArray != total) && ((*bufferTab)[bufferTabSize] != (*wordsListInArray)[i][bufferTabSize]))
         {
             free((*wordsListInArray)[i]);
             (*sizeList)--;
@@ -140,7 +155,9 @@ int scoring(char*** wordsListInArray, int* sizeList, int bufferTabSize, const ch
             }
         }
     }
+     printf("bufferTabSize->%d\n", bufferTabSize);
     printf("newSizeList ->%d\n", *sizeList);
+    printf("TotalScore ->%d\n", totalScoreInArray);
     return 0;
 }
 

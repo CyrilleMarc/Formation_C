@@ -20,6 +20,7 @@ int main()
     int comparisonResult = 1;
     int bufferTabSize = 0;
     char bufTemp[6] = { 0 };
+    char *bufferTab = NULL;
 
 
     printf("Nombre d'essais : %d\n", testTry);
@@ -40,35 +41,40 @@ int main()
     printf("Word to find => %s\n", wordToFind);
 
     
-    
-    while (comparisonResult != 0)
-    {
-        if (sizeList != 0)
+        while (comparisonResult != 0)
         {
-            findRandomWordInList(wordsListInArray, sizeList, propositionWord);
-            printf("Proposition word => %s\n", propositionWord);
-
-            comparisonResult = compareWords(wordToFind, propositionWord);
-            if (comparisonResult == 0)
-            {
-                printf("Bravo , you have found the right word : %s\n", wordToFind);
-            }
-            else
-            {
-                scoring(&wordsListInArray, &sizeList, bufferTabSize, wordToFind, propositionWord);
+            
                 findRandomWordInList(wordsListInArray, sizeList, propositionWord);
-                compareWords(wordToFind, propositionWord);
+                printf("Proposition word => %s\n", propositionWord);
 
-                testTry--;
-                printf("Tries remaining %d\n", testTry);
-
-               
-                if (testTry == 0)
+                comparisonResult = compareWords(wordToFind, propositionWord);
+                if (comparisonResult == 0)
                 {
-                    break;
+                    printf("Bravo , you have found the right word : %s\n", wordToFind);
+                }
+                else
+                {
+                    scoring(&wordsListInArray, &sizeList, bufferTabSize, wordToFind, propositionWord, &bufferTab);
+                    findRandomWordInList(wordsListInArray, sizeList, propositionWord);
+                    compareWords(wordToFind, propositionWord);
+
+                    testTry--;
+                    printf("Tries remaining %d\n", testTry);
+
+
+                    if (testTry == 0)
+                    {
+                        break;
+                    }
                 }
             }
+        
+
+     
+        for (int i = 0; i < sizeList; i++)
+        {
+            free(wordsListInArray[i]);
         }
-    }
-    free(wordsListInArray);
+        free(wordsListInArray);
+        //free(bufferTab); 
 }
