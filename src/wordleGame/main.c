@@ -9,8 +9,45 @@
 
 int main()
 {
+    //***************tests unitaires************************
+    int sizeListTest = 0;
+    char** wordsInArrayTest = NULL;
+    char randomWord[6] = { 0 };
+    const char* filenameTest = "C:/Users/cyril/Desktop/archi_cmake/Formation_C/third_party/fichiers/listeTest.txt";
+    srand(time(NULL));
+    if (testCleanInit(filenameTest, &wordsInArrayTest, &sizeListTest) == 1)
+    {
+        printf("1 - testCleanInit [OK]\n");
+    }
+    else
+    {
+        printf("1 - testCleanInit [KO]\n");
+        exit(EXIT_FAILURE);
+    }
+    if (testClean(wordsInArrayTest, &sizeListTest) == 1)
+    {
+        printf("2 - testClean [OK]\n");
+    }
+    else
+    {
+        printf("Memory adress failure\n");
+        printf("1 - testCleanInit [KO]\n");
+        exit(EXIT_FAILURE);
+    }
+    if (1 == test_WordsInArray(wordsInArrayTest, &sizeListTest))
+    {
+        printf("3 - test_WordsInArray [OK]\n");
+    }
+    else
+    {
+        printf("3 - test_WordsInArray [KO]\n");
+        exit(EXIT_FAILURE);
+    }
+    //***************Fin tests unitaires********************
+
+    
     const char* filename = "C:/Users/cyril/Desktop/archi_cmake/Formation_C/third_party/fichiers/liste.txt";
-    // const char* filename = "C:/Users/cyrille.SGX0/Desktop/code/Formation_C/third_party/fichiers/liste.txt";
+    //const char* filename = "C:/Users/cyrille.SGX0/Desktop/code/Formation_C/third_party/fichiers/liste.txt";
     char** wordsListInArray = NULL;
     int sizeList = 0;
     char word[6] = { 0 };
@@ -21,7 +58,6 @@ int main()
     int bufferTabSize = 0;
     char bufTemp[6] = { 0 };
     char *bufferTab = NULL;
-
 
     printf("Nombre d'essais : %d\n", testTry);
 

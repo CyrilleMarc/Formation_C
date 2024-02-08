@@ -172,7 +172,7 @@ void removeWord(int* sizeList, char* propositionWord, char** wordsListInArray)
         if (0 == strcmp(wordsListInArray[i], propositionWord))
         {
             free(propositionWord);
-            for (j = i; j < sizeListTemp -1; j++)
+            for (j = i; j < sizeListTemp - 1; j++)
             {
                 wordsListInArray[j] = wordsListInArray[j + 1];
             }
@@ -182,7 +182,7 @@ void removeWord(int* sizeList, char* propositionWord, char** wordsListInArray)
         }
     }
     printf("Warning, word not found");
-   
+
 }
 int isPossible(char* ref, char* prop)
 {
@@ -223,7 +223,125 @@ void cleanWordsListInArray(char** wordsListInArray, int* sizeList, char* proposi
     }
 }
 
-testClean()
+int testCleanInit(const char* filenameTest, char*** wordsInArrayTest, int* sizeListTest)
 {
-    return 0;
+    char word[6] = { 0 };
+    FILE* fileTest = fopen(filenameTest, "r");
+        if (NULL == fileTest)
+        {
+            (printf("File \"%s\" not found\n", filenameTest));
+            return -1;
+        }
+        else
+        {
+            *sizeListTest = 0;
+            while(fscanf(fileTest, "%s", word) == 1)
+            {
+                (*sizeListTest)++;
+            }
+        }
+    printf("SizeListTest = %d words inside\n", *sizeListTest);
+    rewind(fileTest);
+    int i, j = 0;
+    *wordsInArrayTest = malloc((*sizeListTest) * sizeof(char*));
+    memset(*wordsInArrayTest, 0, (*sizeListTest) * sizeof(char*));
+    if (NULL == *wordsInArrayTest)
+    {
+        printf("Memory allocation failure !");
+        return 1;
+    }
+    for (i = 0; i < (*sizeListTest); i++)
+    {
+        (*wordsInArrayTest)[i] = malloc(6);
+        memset((*wordsInArrayTest)[i], 0, 6);
+        fscanf(fileTest, "%s", (*wordsInArrayTest)[i]);
+        //printf("%s\n", (*wordsInArrayTest)[i]);
+    }
+    rewind(fileTest);
+    return 1;
+}
+
+int testClean(char** wordsInArrayTest, int* sizeListTest)
+{
+    int sizeListFirst = (*sizeListTest);
+    int sizeListSecond = 0;
+    //printf("sizeListFirst -> %d\n", sizeListFirst);
+    int i, j = 0;
+    int randomNum = rand() % sizeListFirst;
+    //printf("randomNum -> %d\n", randomNum);
+    for (i = 0; i < sizeListFirst; i++)
+    {
+        if(wordsInArrayTest[i] == randomNum)
+        free(wordsInArrayTest[i]);
+        break;
+    }
+    sizeListFirst--;
+    j = randomNum;
+    wordsInArrayTest[j] = wordsInArrayTest[j + 1];
+    
+    sizeListSecond = sizeListFirst;
+    wordsInArrayTest[sizeListSecond] = NULL;
+    if (wordsInArrayTest[sizeListSecond] == NULL)
+    {
+        printf("adress updated\n");
+    }
+    else
+    {
+        return -1;
+    }
+    return 1;
+}
+
+int test_WordsInArray(char** wordsInArrayTest, int* sizeListTest)
+{
+    int i, j, k = 0;
+    int score =0;
+
+    char* ref = malloc(6);
+    memset(ref, 0, 6);
+    char* prop = malloc(6);
+    memset(prop, 0, 6);
+    if (NULL == ref || NULL == prop)
+    {
+        return -1;
+    }
+
+    /****************Same word test*********************/
+
+    strcpy(ref, wordsInArrayTest[0]); //ADDAX
+    strcpy(prop, wordsInArrayTest[0]);//ADDAX
+
+        for (j = 0; j < 5; j++)
+        {
+            if (ref[j] == prop[j])
+            {
+               score++;
+            }
+        }
+        if (score < 5)
+        {
+            return -1;
+        }
+     /*******************************************/
+
+    /*****************different word test*****/
+        strcpy(ref, wordsInArrayTest[5]); // FJORD
+        strcpy(prop, wordsInArrayTest[0]); //GUGUS
+        score = 0;
+        for (i = 0; i < 5; i++)
+        {
+            for (j = 0; j < 5; j++)
+            {
+                if (ref[i] == prop[j])
+                    score++;
+                    break;
+            }
+        }
+        if (score != 0)
+        {
+            return -1;
+        }
+    /*******************************************/
+
+    return 1;
 }
