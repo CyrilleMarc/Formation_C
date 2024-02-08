@@ -54,7 +54,7 @@ int main()
                 }
                 else
                 {
-                    scoring(&wordsListInArray, &sizeList, bufferTabSize, wordToFind, propositionWord, &bufferTab);
+                    scoring(wordsListInArray, &sizeList, bufferTabSize, wordToFind, propositionWord, &bufferTab);
                     findRandomWordInList(wordsListInArray, sizeList, propositionWord);
                     compareWords(wordToFind, propositionWord);
 

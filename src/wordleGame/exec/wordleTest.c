@@ -69,7 +69,7 @@ int compareWords(const char* wordToFind, const char* propositionWord)
     return 1;
 }
 
-int scoring(char*** wordsListInArray, int* sizeList, int bufferTabSize, const char* wordToFind, char* propositionWord, char **bufferTab)
+int scoring(char** wordsListInArray, int* sizeList, int bufferTabSize, const char* wordToFind, char* propositionWord, char **bufferTab)
 {
     int i, j, k = 0;
     int totalScoreInArray = 0;
@@ -124,7 +124,7 @@ int scoring(char*** wordsListInArray, int* sizeList, int bufferTabSize, const ch
             bufferTabSize = 0;
             for (k = 0; k < 5; k++)
             {
-                strcpy(bufferWord2, (*wordsListInArray)[i]);
+                strcpy(bufferWord2, (wordsListInArray)[i]);
                 if (bufferWord2[j] == propositionWord[k])
                 {
                     if (k == j)
@@ -145,96 +145,85 @@ int scoring(char*** wordsListInArray, int* sizeList, int bufferTabSize, const ch
             }
         }
         totalScoreInArray = commonLetter + rightLetter;
-        if ((totalScoreInArray != total) && ((*bufferTab)[bufferTabSize] != (*wordsListInArray)[i][bufferTabSize]))
+        if ((totalScoreInArray != total) && ((*bufferTab)[bufferTabSize] != (wordsListInArray)[i][bufferTabSize]))
         {
-            free((*wordsListInArray)[i]);
+            free((wordsListInArray)[i]);
             (*sizeList)--;
             for (j = i; j < *sizeList; j++)
             {
-                (*wordsListInArray)[j] = (*wordsListInArray)[j + 1];
+                (wordsListInArray)[j] = (wordsListInArray)[j + 1];
             }
         }
     }
-     printf("bufferTabSize->%d\n", bufferTabSize);
+    printf("bufferTabSize->%d\n", bufferTabSize);
     printf("newSizeList ->%d\n", *sizeList);
     printf("TotalScore ->%d\n", totalScoreInArray);
     return 0;
 }
 
 
-
-/*
-int scoring(const char* wordToFind, const char* propositionWord, char** bufferTab, int bufferTabSize)
+void removeWord(int* sizeList, char* propositionWord, char** wordsListInArray)
 {
-    int i, j, k , rightPlace = 0;
-    int rightLetter = 0;
-    int initialValue = -1;
-    char* wordToFindTemp = malloc(6);
-    strcpy(wordToFindTemp, wordToFind);
-    *bufferTab = (char*)malloc(5 * sizeof(char));
+    int i, j = 0;
+    int sizeListTemp = sizeList;
 
-    for (i = 0; i < 5; i++)
+    for (i = 0; i < sizeListTemp; i++)
     {
-        for (j = 0; j < 5; j++)
+        if (0 == strcmp(wordsListInArray[i], propositionWord))
         {
-            if ((propositionWord[i] == wordToFindTemp[i]) && ((*bufferTab)[i] = initialValue))
+            free(propositionWord);
+            for (j = i; j < sizeListTemp -1; j++)
             {
-                (*bufferTab)[i] = wordToFindTemp[i];
-                rightPlace++;
-                break;
+                wordsListInArray[j] = wordsListInArray[j + 1];
             }
-            if ((propositionWord[i] == wordToFindTemp[j]) && ((*bufferTab)[i] = initialValue))
+            wordsListInArray[sizeListTemp - 1] = NULL;
+            (*sizeList)--;
+            return;
+        }
+    }
+    printf("Warning, word not found");
+   
+}
+int isPossible(char* ref, char* prop)
+{
+    int sizeRef = strlen(ref + 1);
+    int sizeProp = strlen(prop + 1);
+    int i, j = 0;
+    for (i = 0; i < sizeRef; i++)
+    {
+        for (j = 0; j < sizeProp; j++)
+        {
+            if (ref[i] == prop[j])
             {
-                (*bufferTab)[i] = wordToFindTemp[j];
-                rightLetter++;
-                break;
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
+void cleanWordsListInArray(char** wordsListInArray, int* sizeList, char* propositionWord)
+{
+    int sizeListTemp = sizeList;
+    int i = 0;
+    int k = i;
+    for (i = 0; i < sizeListTemp; i++)
+    {
+        if (NULL != wordsListInArray[k])
+        {
+            if (isPossible(wordsListInArray[k], propositionWord) != 0)
+            {
+                removeWord(sizeListTemp, propositionWord, wordsListInArray);
             }
             else
             {
-                (*bufferTab)[i] = initialValue;
+                k = i;
             }
         }
-        printf("%c ", (*bufferTab)[i]);
     }
-    printf("%\n");
-    bufferTabSize = rightLetter;
-    return bufferTabSize;
 }
 
-int isPossible(char*** wordsListInArray, int* sizeList, char* bufferTab, int bufferTabSize)
+testClean()
 {
-    int i, j, k = 0;
-    int rightLetter = 0;
-    int newSizeList = 0;
-    char bufTemp[6] = { 0 };
-    
-    for (i = 0; i < *sizeList; i++)
-    {
-        rightLetter = 0;
-
-        for (j = 0; j < 5; j++)
-        {
-            for (k = 0; k < 5; k++)
-            {
-                if (bufferTab[k] == (*wordsListInArray)[i][j] && j != k)
-                {
-                    rightLetter++;
-                    break;
-                }
-            }
-        }
-        if (rightLetter >= bufferTabSize)
-        {
-            (*wordsListInArray)[newSizeList] = (*wordsListInArray)[i];
-            printf("%s\n", (*wordsListInArray)[newSizeList]);
-            newSizeList++;
-        }
-        else
-        {
-            free((*wordsListInArray)[i]);
-        }
-    }
-    *sizeList = newSizeList;
-    printf("%d\n", newSizeList);
+    return 0;
 }
-*/
