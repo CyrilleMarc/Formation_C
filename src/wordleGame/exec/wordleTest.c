@@ -165,18 +165,18 @@ int scoring(char** wordsListInArray, int* sizeList, int bufferTabSize, const cha
 void removeWord(int* sizeList, char* propositionWord, char** wordsListInArray)
 {
     int i, j = 0;
-    int sizeListTemp = *sizeList;
+    int* sizeListTemp = sizeList;
+    
 
-    for (i = 0; i < sizeListTemp; i++)
+    for (i = 0; i < *sizeListTemp; i++)
     {
         if (0 == strcmp(wordsListInArray[i], propositionWord))
         {
-            free(propositionWord);
-            for (j = i; j < sizeListTemp - 1; j++)
+            for (j = i; j < (*sizeListTemp) - 1; j++)
             {
                 wordsListInArray[j] = wordsListInArray[j + 1];
             }
-            wordsListInArray[sizeListTemp - 1] = NULL;
+            wordsListInArray[(*sizeListTemp) - 1] = NULL;
             (*sizeList)--;
             return;
         }
@@ -204,16 +204,16 @@ int isPossible(char* ref, char* prop)
 
 void cleanWordsListInArray(char** wordsListInArray, int* sizeList, char* propositionWord)
 {
-    int sizeListTemp = sizeList;
+    int* sizeListTemp = sizeList;
     int i = 0;
     int k = i;
-    for (i = 0; i < sizeListTemp; i++)
+    for (i = 0; i < *sizeListTemp; i++)
     {
         if (NULL != wordsListInArray[k])
         {
             if (isPossible(wordsListInArray[k], propositionWord) != 0)
             {
-                removeWord(sizeListTemp, propositionWord, wordsListInArray);
+                //removeWord(*sizeListTemp, propositionWord, wordsListInArray);
             }
             else
             {
@@ -321,7 +321,7 @@ int test_WordsInArray(char** wordsInArrayTest, int* sizeListTest)
         }
      /*******************************************/
 
-    /*****************different words test*****/
+    /*****************different word test*****/
         strcpy(ref, wordsInArrayTest[5]); // FJORD
         strcpy(prop, wordsInArrayTest[0]); //GUGUS
         score = 0;

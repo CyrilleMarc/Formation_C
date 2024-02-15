@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <common/common.h>
+// #include <common/common.h>
 
 int main()
 {
-    logger_set_current_level(LOG_INFO);
-    logger_log(LOG_DEBUG, __FUNCSIG__, "");
+    // logger_set_current_level(LOG_INFO);
+    // logger_log(LOG_DEBUG, __FUNCSIG__, "");
 
     int rows = 0;
     int columns = 0;

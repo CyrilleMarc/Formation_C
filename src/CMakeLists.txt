@@ -24,6 +24,7 @@ subdirs(game)
 subdirs(screen)
 subdirs(dear_imgui)
 subdirs(wordleGame)
+subdirs(class_cpp)
 #subdirs(snake)
 
 

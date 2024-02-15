@@ -53,7 +53,7 @@ int main()
     char word[6] = { 0 };
     char wordToFind[6] = { 0 };
     char propositionWord[6] = { 0 };
-    int testTry = 5;
+    int testTry = 15;
     int comparisonResult = 1;
     int bufferTabSize = 0;
     char bufTemp[6] = { 0 };
