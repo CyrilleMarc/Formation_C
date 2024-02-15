@@ -1,4 +1,6 @@
 #include <iostream>
+#include <ctime>
+
 #include "class_cpp/class.h"
 
 using namespace std;
@@ -56,6 +58,13 @@ using namespace std;
     int Car::getMileage()
     {
         return mileage;
+    }
+
+    int Car::getAge()
+    {
+       time_t t = time(0);
+       struct tm* now = localtime(&t);
+       return now->tm_year + 1900 - year;
     }
 
     void Car::printDetails()

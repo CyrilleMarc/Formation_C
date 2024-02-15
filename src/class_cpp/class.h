@@ -24,5 +24,6 @@ public :
 	std::string getModel();
 	int getYear();
 	int getMileage();
+	int getAge();
 	
 };
