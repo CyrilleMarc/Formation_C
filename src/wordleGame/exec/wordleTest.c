@@ -165,7 +165,7 @@ int scoring(char** wordsListInArray, int* sizeList, int bufferTabSize, const cha
 void removeWord(int* sizeList, char* propositionWord, char** wordsListInArray)
 {
     int i, j = 0;
-    int sizeListTemp = sizeList;
+    int sizeListTemp = *sizeList;
 
     for (i = 0; i < sizeListTemp; i++)
     {
@@ -255,7 +255,6 @@ int testCleanInit(const char* filenameTest, char*** wordsInArrayTest, int* sizeL
         (*wordsInArrayTest)[i] = malloc(6);
         memset((*wordsInArrayTest)[i], 0, 6);
         fscanf(fileTest, "%s", (*wordsInArrayTest)[i]);
-        //printf("%s\n", (*wordsInArrayTest)[i]);
     }
     rewind(fileTest);
     return 1;
@@ -265,10 +264,8 @@ int testClean(char** wordsInArrayTest, int* sizeListTest)
 {
     int sizeListFirst = (*sizeListTest);
     int sizeListSecond = 0;
-    //printf("sizeListFirst -> %d\n", sizeListFirst);
     int i, j = 0;
     int randomNum = rand() % sizeListFirst;
-    //printf("randomNum -> %d\n", randomNum);
     for (i = 0; i < sizeListFirst; i++)
     {
         if(wordsInArrayTest[i] == randomNum)
@@ -324,7 +321,7 @@ int test_WordsInArray(char** wordsInArrayTest, int* sizeListTest)
         }
      /*******************************************/
 
-    /*****************different word test*****/
+    /*****************different words test*****/
         strcpy(ref, wordsInArrayTest[5]); // FJORD
         strcpy(prop, wordsInArrayTest[0]); //GUGUS
         score = 0;
