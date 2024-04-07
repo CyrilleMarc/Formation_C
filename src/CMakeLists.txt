@@ -6,6 +6,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../third_party/SDL3/include)
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/../third_party/SDL3/lib)
+#include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../third_party/CJSON/include)
 
 subdirs(common)
 subdirs(array)
@@ -25,7 +26,9 @@ subdirs(screen)
 subdirs(dear_imgui)
 subdirs(wordleGame)
 subdirs(class_cpp)
-#subdirs(snake)
+subdirs(todoList)
+subdirs(test)
+subdirs(trees)
 
 
 

@@ -3,7 +3,6 @@
 #include <string.h>
 #include  <time.h>
 
-#include <common/common.h>
 
 struct Data 
 {
@@ -13,16 +12,14 @@ struct Data
 
 struct Data user; 
 
-int main(int argc, char* argv[])
+int main()
 {
-    logger_set_current_level(LOG_INFO);
-    logger_log(LOG_DEBUG, __FUNCSIG__, argv[0]);
 
     FILE *sourceFile = fopen("C:/Users/cyril/Desktop/dataFiles/structure_test.txt", "r");
     FILE *destinationFile = fopen("C:/Users/cyril/Desktop/dataFiles/structure_test_sorted.txt", "w");
     if (NULL == sourceFile || NULL == destinationFile)
     {
-        logger_log(LOG_DEBUG, __FUNCSIG__, "File not found");
+        lprintf("File not found");
     }
     char person[2048];
     while (fgets(person, sizeof(person), sourceFile) != NULL)
