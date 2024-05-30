@@ -29,6 +29,7 @@ subdirs(class_cpp)
 subdirs(todoList)
 subdirs(test)
 subdirs(trees)
+subdirs(RedAndBlackTrees)
 
 
 

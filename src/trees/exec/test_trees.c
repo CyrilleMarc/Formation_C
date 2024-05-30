@@ -43,7 +43,7 @@ int main() {
                 printf("New node color: %d\n", newNode->color);
                 if (NULL != newNode->parent)
                 {
-                    printf("New node parent %d\n", *(newNode->parent));
+                    printf("New node parent %d\n", *(newNode->parent->data));
                 }
                 printf("******************************\n");
             }
@@ -56,7 +56,7 @@ int main() {
         printf("Failed to initialize root node\n");
     }
 
-    rootToLeftLeaf(root, &totalNode, &numLeftBlack);
+    //rootToLeftLeaf(root, &totalNode, &numLeftBlack);
     printf("number of leftBranchNodeBlack -> %d\n", numLeftBlack);
     printf("Total node, %d\n", totalNode);
     printf("\n");
@@ -69,7 +69,7 @@ int main() {
         printf("newData content -> %d\n", newData[i]);
     }
 
-    free_node(root, &memoryMalloc);
+    //free_node(root, &memoryMalloc);
     printf("remaining allocated memory = %d\n", memoryMalloc);
     if (memoryMalloc == 0)
         printf("Memory is empty\n");

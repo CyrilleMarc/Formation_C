@@ -163,7 +163,7 @@ void insertFixUp(Node** root, Node* k) {
 }
 
 
-
+/*
 void free_node(Node* node, int* memoryMalloc) {
     if (node == NULL) {
         return;
@@ -241,12 +241,13 @@ int rootToRightLeaf(Node* root, int* totalNode, int* numRightBlack)
 
     return 0;
 }
-
+*/
 void delete_node(Node** root, int* data)
 {
     Node* current = *root;
     Node* parent = NULL;
 
+    //1er cas current is a leaf
     if (NULL == current->left && NULL == current->right && *data == (*current->data))
     {
         free(current);
