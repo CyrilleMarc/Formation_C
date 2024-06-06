@@ -5,7 +5,6 @@
 #include "trees/trees.h"
 #include <common/common.h>
 
-
 int main() {
     int data = 100;
     int i, size = 0;
@@ -13,8 +12,8 @@ int main() {
     int numRightBlack = 0;
     int memoryMalloc = 0;
     int totalNode = 0;
-    int numOfNode = 12;
-    int newData[] = {31, 36, 12, 8, 45, 56};
+    int numOfNode = 45;
+    int newData[] = { 45, 39, 63, 199, 23, 967 };
     size = sizeof(newData) / sizeof(int);
 
     Node* root = init_node(&data, &memoryMalloc);
@@ -25,26 +24,20 @@ int main() {
     if (root != NULL) {
         printf("Root initialized successfully\n");
         printf("root data = %d\n", *(root->data));
-        printf("root color = %d\n", root->color);
+        if (0 == root->color) {
+            printf("New root color: BLACK\n");
+        }
+        if (1 == root->color) {
+            printf("New node color: RED\n");
+        }
 
         for (i = 0; i < size; i++) {
-            Node* newNode = insert_newNode(&newData[i], root, &memoryMalloc);
+            root = insert_newNode(&newData[i], root, &memoryMalloc);
 
-            if (newNode != NULL) {
+            if (root != NULL) {
                 printf("******************************\n");
-                printf("New node inserted successfully\n");
-                printf("New node data: %d\n", *(newNode->data));
-                if (newNode->right != NULL) {
-                    printf("New node right: %d\n", *(newNode->right->data));
-                }
-                if (newNode->left != NULL) {
-                    printf("New node left : %d\n", *(newNode->left->data));
-                }
-                printf("New node color: %d\n", newNode->color);
-                if (NULL != newNode->parent)
-                {
-                    printf("New node parent %d\n", *(newNode->parent->data));
-                }
+                printf("Node inserted successfully\n");
+                printf("Node data: %d\n", newData[i]);
                 printf("******************************\n");
             }
             else {
@@ -57,25 +50,29 @@ int main() {
     }
 
     //rootToLeftLeaf(root, &totalNode, &numLeftBlack);
-    printf("number of leftBranchNodeBlack -> %d\n", numLeftBlack);
-    printf("Total node, %d\n", totalNode);
-    printf("\n");
-    printf("size of newData->%d\n", size);
+    printf("Number of left branch black nodes: %d\n", numLeftBlack);
+    printf("Total nodes: %d\n", totalNode);
     printf("\n");
 
-    //delete_node(root, &numOfNode);
-    printf("size of newData->%d\n", size);
+    // Test deleting each node
     for (i = 0; i < size; i++) {
-        printf("newData content -> %d\n", newData[i]);
+        delete_node(&root, &newData[i]);
+        printf("Deleted node: %d\n", newData[i]);
     }
 
-    //free_node(root, &memoryMalloc);
-    printf("remaining allocated memory = %d\n", memoryMalloc);
-    if (memoryMalloc == 0)
+    printf("Size of newData: %d\n", size);
+    for (i = 0; i < size; i++) {
+        printf("newData content: %d\n", newData[i]);
+    }
+
+    free_node(root, &memoryMalloc);
+    printf("Remaining allocated memory: %d\n", memoryMalloc);
+    if (memoryMalloc == 0) {
         printf("Memory is empty\n");
-    else
-        printf("persistent memory leaks\n");
+    }
+    else {
+        printf("Persistent memory leaks\n");
+    }
 
     return 0;
 }
-

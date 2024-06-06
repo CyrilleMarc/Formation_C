@@ -20,6 +20,7 @@ void free_node(Node* node, int* memoryMalloc);
 void leftRotate(Node** root, Node* x);
 void rightRotate(Node** root, Node* y);
 void insertFixUp(Node** root, Node* k);
+void deleteFixUp(Node** root, Node* x);
 int rootToLeftLeaf(Node* root, int* totalNode, int* numLeftBlack);
 int rootToRightLeaf(Node* root, int* totalNode, int* numRightBlack);
 void delete_node(Node** root, int* numOfNode);

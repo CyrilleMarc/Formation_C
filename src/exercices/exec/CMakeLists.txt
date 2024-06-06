@@ -99,3 +99,4 @@ set_target_properties(ex104_algo PROPERTIES FOLDER "exercices")
 add_executable(ex105_pile ex105_pile.c)
 target_link_libraries(ex105_pile common_lib)
 set_target_properties(ex105_pile PROPERTIES FOLDER "exercices")
+
